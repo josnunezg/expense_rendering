@@ -18,13 +18,9 @@ async function connect() {
     entities: [
       path.join(__dirname, path_entities)
     ],
-    synchronize: true,
+    synchronize: process.env.NODE_ENV == 'development',
     logging,
-    extra: {
-      ssl: {
-        rejectUnauthorized: false
-      }
-    }
+    ssl: true
   });
   console.log('Database connected');
 }
