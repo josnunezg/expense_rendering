@@ -7,20 +7,24 @@ const logging =
 const path_entities =
   process.env.NODE_ENV == 'development' ? '../entities/**/**.ts' : '../entities/**/**.js';
 
+const paths = path.join(__dirname, path_entities);
+
 async function connect() {
+  console.log(paths);
   await createConnection({
     type: 'postgres',
-    host: process.env.DATABASE_HOST,
-    port: 5432,
-    username: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME,
+    // host: process.env.DATABASE_HOST,
+    // port: 5432,
+    // username: process.env.DATABASE_USER,
+    // password: process.env.DATABASE_PASSWORD,
+    // database: process.env.DATABASE_NAME,
+    url: process.env.DATABASE_URL,
     entities: [
-      path.join(__dirname, path_entities)
+      paths
     ],
     synchronize: process.env.NODE_ENV == 'development',
     logging,
-    ssl: true
+    ssl: process.env.NODE_ENV == 'production'
   });
   console.log('Database connected');
 }
