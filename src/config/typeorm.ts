@@ -4,6 +4,9 @@ import path from 'path';
 const logging =
   process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'text'
 
+const path_entities =
+  process.env.NODE_ENV == 'development' ? '../entities/**/**.ts' : '../entities/**/**.js';
+
 async function connect() {
   await createConnection({
     type: 'postgres',
@@ -13,7 +16,7 @@ async function connect() {
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_NAME,
     entities: [
-      path.join(__dirname, '../entities/**/**.ts')
+      path.join(__dirname, path_entities)
     ],
     synchronize: true,
     logging,
