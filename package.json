@@ -2,8 +2,13 @@
   "name": "expense_rendering",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": "14.16.0"
+  },
   "scripts": {
-    "dev": "nodemon src/index.ts --exec ts-node"
+    "dev": "nodemon src/index.ts --exec ts-node",
+    "postinstall": "tsc",
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
