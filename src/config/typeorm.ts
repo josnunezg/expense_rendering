@@ -35,7 +35,7 @@ function createOption(): ConnectionOptions {
 
 async function connect() {
   const options = createOption();
-  await createConnection(options);
+  await (await createConnection(options)).synchronize(false);
   console.log('Database connected');
 }
 
