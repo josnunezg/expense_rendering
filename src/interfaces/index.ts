@@ -10,3 +10,9 @@ export enum KindTransaction {
   EXPENSE = 'expense',
   INCOME = 'income'
 }
+
+export enum Environment {
+  DEVELOPMENT = 'development',
+  PRODUCTION = 'production',
+  TEST = 'test'
+}
