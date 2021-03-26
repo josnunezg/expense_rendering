@@ -13,7 +13,6 @@ class StartApollo {
   private jwtSecret:string = process.env.JWT_SECRET as string;
   private static user: User | undefined;
   private resolvers:any;
-  private token!:string;
 
   constructor(resolvers:any) {
     this.resolvers = resolvers;
@@ -34,22 +33,17 @@ class StartApollo {
     })
   }
 
-  private async setUser() {
-    if (!StartApollo.user && this.token) {
-      const { id } = this.decode();
-      const user = await User.findOneWithJoins(id);
-      StartApollo.user = user;
-    }
-  }
-
-  private decode():Payload {
-    return jwt.verify(this.token, this.jwtSecret) as Payload;
+  private decode(token: string):Payload {
+    return jwt.verify(token, this.jwtSecret) as Payload;
   }
 
   private async context({ req }: ExpressContext): Promise<IContext> {
     const { headers: { authorization } } = req;
-    this.token = authorization as string;
-    this.setUser();
+    if (!StartApollo.user && authorization) {
+      const { id } = this.decode(authorization as string);
+      const user = await User.findOneWithJoins(id);
+      StartApollo.user = user;
+    }
 
     return {
       req,
